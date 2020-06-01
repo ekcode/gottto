@@ -16,20 +16,22 @@ func main() {
 	fmt.Println("로또 번호를 생성합니다.")
 
 	rand.Seed(time.Now().UnixNano())
-	lucky645 := make([]int, ElectCount)
+	var lucky645 []int
 	i := 0
 	for i < ElectCount {
+		time.Sleep(1 * time.Second)
 		randNum := rand.Intn(NumberRange)
-		if exists(randNum, lucky645) {
+		if randNum == 0 || exists(randNum, lucky645) {
 			continue
 		} else {
-			lucky645[i] = randNum
+			lucky645 = append(lucky645, randNum)
+			sort.Sort(sort.IntSlice(lucky645))
+			fmt.Printf("두구두구둥 %2d %s %v\n", randNum, " => ", lucky645)
 			i++
 		}
 	}
 
-	sort.Sort(sort.IntSlice(lucky645))
-	fmt.Println("오늘의 행운 번호는", lucky645)
+	fmt.Println("\n*** 오늘의 행운 번호는", lucky645)
 
 }
 
